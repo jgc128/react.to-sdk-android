@@ -116,7 +116,7 @@ public class ReactOrtc extends ReactBaseOrtc {
             jsonMsg.put("action", "users_counter");
             jsonMsg.put("device_id", deviceId);
             jsonMsg.put("event_id", event.Id);
-            jsonMsg.put("type", usersCounterType.toString());
+            jsonMsg.put("type", usersCounterType.toString().toLowerCase());
 
             sendMessage(jsonMsg.toString());
 
