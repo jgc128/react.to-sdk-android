@@ -15,13 +15,18 @@ import java.util.List;
 import to.react.sdk.android.reactto.Api.Model.Event;
 import to.react.sdk.android.reactto.Api.Model.EventTarget;
 import to.react.sdk.android.reactto.Api.EventTargetsApiRequest;
+import to.react.sdk.android.reactto.Api.Model.Interaction;
+import to.react.sdk.android.reactto.Api.Model.InteractionUpdateMessage;
+import to.react.sdk.android.reactto.Api.Model.UsersCounterUpdateMessage;
 import to.react.sdk.android.reactto.ReactApi;
+import to.react.sdk.android.reactto.ReactOrtc;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView testTextView;
 
     ReactApi api;
+    ReactOrtc ortc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,18 +69,57 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
 
-        Event testEvent = new Event();
-        testEvent.Id = 10;
-        api.executeRequest(new EventTargetsApiRequest(testEvent) {
+//        Event testEvent = new Event();
+//        testEvent.Id = 10;
+//        api.executeRequest(new EventTargetsApiRequest(testEvent) {
+//            @Override
+//            public void onApiResponse(List<EventTarget> result) {
+//                testTextView.setText(
+//                        result.get(0).Name + "\n" + result.get(1).Name
+//                        + "\n\n" + result.get(0).Interactions.get(0).Id
+//                        + " - " + result.get(0).Interactions.get(0).MinValue + ":" + result.get(0).Interactions.get(0).MaxValue
+//                );
+//            }
+//        });
+
+
+        ortc = new ReactOrtc("cacRFz", "universal_event_channel_to_receive_reaction", "universal_event_channel_to_send_aggregate") {
             @Override
-            public void onApiResponse(List<EventTarget> result) {
-                testTextView.setText(
-                        result.get(0).Name + "\n" + result.get(1).Name
-                        + "\n\n" + result.get(0).Interactions.get(0).Id
-                        + " - " + result.get(0).Interactions.get(0).MinValue + ":" + result.get(0).Interactions.get(0).MaxValue
-                );
+            public void onInteractionUpdate(final InteractionUpdateMessage message) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        testTextView.setText("Interaction:" + message.Value);
+                    }
+                });
             }
-        });
+
+            @Override
+            public void onUsersCounterUpdate(UsersCounterUpdateMessage message) {
+
+            }
+            @Override
+            public void onSubscribed() {
+                Interaction testInteraction = new Interaction();
+                testInteraction.Id = 11;
+                testInteraction.Type = "FloatValueInteraction";
+                ortc.sendReaction("zzz", testInteraction, 0.3);
+            }
+        };
+
+        try {
+            ortc.init();
+            ortc.connect();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+
     }
 
     @Override
