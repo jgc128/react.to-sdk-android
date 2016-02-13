@@ -5,6 +5,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public abstract class BaseApiRequest<T> {
@@ -17,15 +18,23 @@ public abstract class BaseApiRequest<T> {
         Response.Listener<JSONObject> listener =  new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+            try {
                 T result = getFromJson(response);
+
                 onApiResponse(result);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+
+                onApiError(e.getMessage());
+            }
             }
         };
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errorMsg = error.getMessage();
-                onApiError(errorMsg);
+            String errorMsg = error.getMessage();
+            onApiError(errorMsg);
             }
         };
 
@@ -35,7 +44,7 @@ public abstract class BaseApiRequest<T> {
     }
 
     abstract protected String getUrl();
-    abstract protected T getFromJson(JSONObject json);
+    abstract protected T getFromJson(JSONObject json) throws Exception;
     abstract public void onApiResponse(T result);
     abstract public void onApiError(String error);
 }

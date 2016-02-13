@@ -16,20 +16,16 @@ public class AppsApiRequest extends BaseApiRequest<List<App>> {
     }
 
     @Override
-    protected List<App> getFromJson(JSONObject json) {
+    protected List<App> getFromJson(JSONObject json) throws Exception {
 
         List<App> list = new ArrayList<App>();
 
-        try {
-            JSONArray array = json.getJSONArray("response");
-            for(int i = 0 ; i < array.length() ; i++){
-                App a = new App();
-                a.Id  = array.getJSONObject(i).getInt("id");
-                a.Name = array.getJSONObject(i).getString("name");
-                list.add(a);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+        JSONArray array = json.getJSONArray("response");
+        for(int i = 0 ; i < array.length() ; i++){
+            App a = new App();
+            a.Id  = array.getJSONObject(i).getInt("id");
+            a.Name = array.getJSONObject(i).getString("name");
+            list.add(a);
         }
 
         return list;
