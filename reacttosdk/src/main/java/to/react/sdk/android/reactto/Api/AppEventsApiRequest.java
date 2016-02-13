@@ -34,9 +34,9 @@ public class AppEventsApiRequest extends BaseApiRequest<List<Event>> {
         for(int i = 0 ; i < array.length() ; i++){
             Event e = new Event();
 
-            e.Id  = array.getJSONObject(i).getInt("id");
+            e.Id  = array.getJSONObject(i).getLong("id");
             e.Name = array.getJSONObject(i).getString("name");
-            e.ParentEventId = array.getJSONObject(i).getInt("parent");
+            e.ParentEventId = array.getJSONObject(i).getLong("parent");
             e.DateStart = dateFormat.parse(array.getJSONObject(i).getString("start_date"));
             e.DateEnd = dateFormat.parse(array.getJSONObject(i).getString("end_date"));
             e.ImageUrl = array.getJSONObject(i).getString("image_url");

@@ -17,6 +17,8 @@ import to.react.sdk.android.reactto.Api.App;
 import to.react.sdk.android.reactto.Api.AppEventsApiRequest;
 import to.react.sdk.android.reactto.Api.AppsApiRequest;
 import to.react.sdk.android.reactto.Api.Event;
+import to.react.sdk.android.reactto.Api.EventTarget;
+import to.react.sdk.android.reactto.Api.EventTargetsApiRequest;
 import to.react.sdk.android.reactto.ReactApi;
 import to.react.sdk.android.reactto.ReactApiSingleton;
 
@@ -57,12 +59,26 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
 
-        App testApp = new App();
-        testApp.Id = 2;
-        api.executeRequest(new AppEventsApiRequest(testApp) {
+//        App testApp = new App();
+//        testApp.Id = 2;
+//        api.executeRequest(new AppEventsApiRequest(testApp) {
+//            @Override
+//            public void onApiResponse(List<Event> result) {
+//                testTextView.setText(result.get(0).Name + "\n" + result.get(1).Name + "\n" + result.get(2).Name);
+//            }
+//        });
+
+
+        Event testEvent = new Event();
+        testEvent.Id = 10;
+        api.executeRequest(new EventTargetsApiRequest(testEvent) {
             @Override
-            public void onApiResponse(List<Event> result) {
-                testTextView.setText(result.get(0).Name + "\n" + result.get(1).Name + "\n" + result.get(2).Name);
+            public void onApiResponse(List<EventTarget> result) {
+                testTextView.setText(
+                        result.get(0).Name + "\n" + result.get(1).Name
+                        + "\n\n" + result.get(0).Interactions.get(0).Id
+                        + " - " + result.get(0).Interactions.get(0).MinValue + ":" + result.get(0).Interactions.get(0).MaxValue
+                );
             }
         });
     }

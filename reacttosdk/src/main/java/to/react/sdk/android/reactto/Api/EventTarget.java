@@ -1,16 +1,15 @@
 package to.react.sdk.android.reactto.Api;
 
-
 import java.util.Date;
+import java.util.List;
 
-public class Event {
+
+public class EventTarget {
     public long Id;
     public String Name;
-    public String Description;
-    public long ParentEventId;
     public Date DateStart;
     public Date DateEnd;
+    public long ParentTarget;
     public String ImageUrl;
-    public String Link;
-    public boolean IsNegativeReactions;
+    public List<Interaction> Interactions;
 }

@@ -23,7 +23,7 @@ public class AppsApiRequest extends BaseApiRequest<List<App>> {
         JSONArray array = json.getJSONArray("response");
         for(int i = 0 ; i < array.length() ; i++){
             App a = new App();
-            a.Id  = array.getJSONObject(i).getInt("id");
+            a.Id  = array.getJSONObject(i).getLong("id");
             a.Name = array.getJSONObject(i).getString("name");
             list.add(a);
         }
