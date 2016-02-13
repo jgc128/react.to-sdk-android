@@ -1,15 +1,15 @@
 package to.react.sdk.android.reactto.Api;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import to.react.sdk.android.reactto.Api.Model.App;
+import to.react.sdk.android.reactto.Api.Model.Event;
 
 public class AppEventsApiRequest extends BaseApiRequest<List<Event>> {
 
@@ -26,7 +26,7 @@ public class AppEventsApiRequest extends BaseApiRequest<List<Event>> {
 
     @Override
     protected List<Event> getFromJson(JSONObject json) throws Exception {
-        List<Event> list = new ArrayList<Event>();
+        List<Event> list = new ArrayList<>();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
 

@@ -1,4 +1,4 @@
-package to.react.sdk.android.reactto.Api;
+package to.react.sdk.android.reactto.Api.Model;
 
 public class Interaction {
     public long Id;

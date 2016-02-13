@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import to.react.sdk.android.reactto.Api.Model.Event;
+import to.react.sdk.android.reactto.Api.Model.EventTarget;
+import to.react.sdk.android.reactto.Api.Model.Interaction;
+
 public class EventTargetsApiRequest extends BaseApiRequest<List<EventTarget>> {
 
     Event targetEvent;
@@ -23,7 +27,7 @@ public class EventTargetsApiRequest extends BaseApiRequest<List<EventTarget>> {
 
     @Override
     protected List<EventTarget> getFromJson(JSONObject json) throws Exception {
-        List<EventTarget> list = new ArrayList<EventTarget>();
+        List<EventTarget> list = new ArrayList<>();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
 
@@ -36,8 +40,9 @@ public class EventTargetsApiRequest extends BaseApiRequest<List<EventTarget>> {
             et.ParentTarget = array.getJSONObject(i).getLong("parent");
             et.DateStart = dateFormat.parse(array.getJSONObject(i).getString("start_date"));
             et.DateEnd = dateFormat.parse(array.getJSONObject(i).getString("end_date"));
+            et.ImageUrl = array.getJSONObject(i).getString("image_url");
 
-            et.Interactions = new ArrayList<Interaction>();
+            et.Interactions = new ArrayList<>();
             JSONArray arrayInteractions = array.getJSONObject(i).getJSONArray("interaction");
             for(int j = 0 ; j < arrayInteractions.length() ; j++) {
                 Interaction it = new Interaction();

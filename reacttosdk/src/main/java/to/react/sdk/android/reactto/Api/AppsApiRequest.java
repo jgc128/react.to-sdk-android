@@ -1,11 +1,12 @@
 package to.react.sdk.android.reactto.Api;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import to.react.sdk.android.reactto.Api.Model.App;
 
 
 public class AppsApiRequest extends BaseApiRequest<List<App>> {
@@ -18,7 +19,7 @@ public class AppsApiRequest extends BaseApiRequest<List<App>> {
     @Override
     protected List<App> getFromJson(JSONObject json) throws Exception {
 
-        List<App> list = new ArrayList<App>();
+        List<App> list = new ArrayList<>();
 
         JSONArray array = json.getJSONArray("response");
         for(int i = 0 ; i < array.length() ; i++){

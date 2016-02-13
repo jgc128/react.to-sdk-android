@@ -1,6 +1,5 @@
 package to.react.sdk.android.reacttosdkapp;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,14 +12,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import to.react.sdk.android.reactto.Api.App;
-import to.react.sdk.android.reactto.Api.AppEventsApiRequest;
-import to.react.sdk.android.reactto.Api.AppsApiRequest;
-import to.react.sdk.android.reactto.Api.Event;
-import to.react.sdk.android.reactto.Api.EventTarget;
+import to.react.sdk.android.reactto.Api.Model.Event;
+import to.react.sdk.android.reactto.Api.Model.EventTarget;
 import to.react.sdk.android.reactto.Api.EventTargetsApiRequest;
 import to.react.sdk.android.reactto.ReactApi;
-import to.react.sdk.android.reactto.ReactApiSingleton;
 
 public class MainActivity extends AppCompatActivity {
 

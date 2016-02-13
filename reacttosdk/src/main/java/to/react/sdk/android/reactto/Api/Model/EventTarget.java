@@ -1,4 +1,4 @@
-package to.react.sdk.android.reactto.Api;
+package to.react.sdk.android.reactto.Api.Model;
 
 import java.util.Date;
 import java.util.List;
