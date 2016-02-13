@@ -14,7 +14,9 @@ import android.widget.TextView;
 import java.util.List;
 
 import to.react.sdk.android.reactto.Api.App;
+import to.react.sdk.android.reactto.Api.AppEventsApiRequest;
 import to.react.sdk.android.reactto.Api.AppsApiRequest;
+import to.react.sdk.android.reactto.Api.Event;
 import to.react.sdk.android.reactto.ReactApi;
 import to.react.sdk.android.reactto.ReactApiSingleton;
 
@@ -43,14 +45,24 @@ public class MainActivity extends AppCompatActivity {
         api = new ReactApi(this);
 
         testTextView = (TextView)findViewById(R.id.test);
-
-
         testTextView.setText("zzzz");
 
-        api.executeRequest(new AppsApiRequest() {
+
+
+//        api.executeRequest(new AppsApiRequest() {
+//            @Override
+//            public void onApiResponse(List<App> result) {
+//                testTextView.setText(result.get(0).Name);
+//            }
+//        });
+
+
+        App testApp = new App();
+        testApp.Id = 2;
+        api.executeRequest(new AppEventsApiRequest(testApp) {
             @Override
-            public void onApiResponse(List<App> result) {
-                testTextView.setText(result.get(0).Name);
+            public void onApiResponse(List<Event> result) {
+                testTextView.setText(result.get(0).Name + "\n" + result.get(1).Name + "\n" + result.get(2).Name);
             }
         });
     }
