@@ -15,6 +15,7 @@ import java.util.Map;
 import to.react.sdk.android.reactto.Api.Model.ApiRequestStatusResult;
 import to.react.sdk.android.reactto.Api.Model.App;
 import to.react.sdk.android.reactto.Api.Model.BaseApiPostRequest;
+import to.react.sdk.android.reactto.Helpers.StringHelper;
 
 public class AddEventByLinkApiRequest extends BaseApiPostRequest<ApiRequestStatusResult> {
     App targetApp;
@@ -41,10 +42,10 @@ public class AddEventByLinkApiRequest extends BaseApiPostRequest<ApiRequestStatu
 
     @Override
     protected ApiRequestStatusResult getFromJson(JSONObject json) throws Exception {
-        String strStatus = json.getJSONObject("response").getString("status");
+        String strStatus = StringHelper.toTitleCase(json.getJSONObject("response").getString("status"));
 
         ApiRequestStatusResult result = new ApiRequestStatusResult();
-        result.setStatus(strStatus);
+        result.Status = ApiRequestStatusResult.StatusResult.valueOf(strStatus);
 
         return result;
     }

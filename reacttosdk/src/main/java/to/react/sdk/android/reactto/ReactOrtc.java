@@ -12,6 +12,7 @@ import to.react.sdk.android.reactto.Api.Model.Event;
 import to.react.sdk.android.reactto.Api.Model.Interaction;
 import to.react.sdk.android.reactto.Api.Model.InteractionUpdateMessage;
 import to.react.sdk.android.reactto.Api.Model.UsersCounterUpdateMessage;
+import to.react.sdk.android.reactto.Helpers.DateTimeHelper;
 
 public class ReactOrtc extends ReactBaseOrtc {
     public enum UsersCounterType
@@ -96,7 +97,7 @@ public class ReactOrtc extends ReactBaseOrtc {
             jsonMsg.put("interaction_id", interaction.Id);
             jsonMsg.put("interaction_type", interaction.Type);
 
-            String timeStamp = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).format(new Date());
+            String timeStamp = DateTimeHelper.formatDateString(new Date());
             jsonMsg.put("timestamp", timeStamp);
 
             sendMessage(jsonMsg.toString());
