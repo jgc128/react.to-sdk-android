@@ -10,8 +10,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.sql.Date;
+import java.text.ParseException;
 import java.util.List;
 
+import to.react.sdk.android.reactto.Api.AddEventApiRequest;
 import to.react.sdk.android.reactto.Api.AddEventByLinkApiRequest;
 import to.react.sdk.android.reactto.Api.Model.ApiRequestStatusResult;
 import to.react.sdk.android.reactto.Api.Model.App;
@@ -20,7 +23,9 @@ import to.react.sdk.android.reactto.Api.Model.EventTarget;
 import to.react.sdk.android.reactto.Api.EventTargetsApiRequest;
 import to.react.sdk.android.reactto.Api.Model.Interaction;
 import to.react.sdk.android.reactto.Api.Model.InteractionUpdateMessage;
+import to.react.sdk.android.reactto.Api.Model.NewEvent;
 import to.react.sdk.android.reactto.Api.Model.UsersCounterUpdateMessage;
+import to.react.sdk.android.reactto.Helpers.DateTimeHelper;
 import to.react.sdk.android.reactto.ReactApi;
 import to.react.sdk.android.reactto.ReactOrtc;
 
@@ -86,19 +91,46 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
 
-        App testApp = new App();
-        testApp.Id = 2;
-        api.executeRequest(new AddEventByLinkApiRequest(testApp, "http://www.twitch.tv/low4n") {
-            @Override
-            public void onApiResponse(ApiRequestStatusResult result) {
-                if(result.Status == ApiRequestStatusResult.StatusResult.Ok) {
-                    log("Added!");
-                }
-                if(result.Status == ApiRequestStatusResult.StatusResult.Error) {
-                    log("Error!");
-                }
-            }
-        });
+//        App testApp = new App();
+//        testApp.Id = 2;
+//        api.executeRequest(new AddEventByLinkApiRequest(testApp, "http://www.twitch.tv/low4n") {
+//            @Override
+//            public void onApiResponse(ApiRequestStatusResult result) {
+//                if(result.Status == ApiRequestStatusResult.StatusResult.Ok) {
+//                    log("Added!");
+//                }
+//                if(result.Status == ApiRequestStatusResult.StatusResult.Error) {
+//                    log("Error!");
+//                }
+//            }
+//        });
+
+        
+
+//        App testApp = new App();
+//        testApp.Id = 2;
+//        NewEvent testEvent = new NewEvent();
+//        testEvent.Name = "zzzz - sdk android";
+//        testEvent.Description = "zzzzzz";
+//
+//        try {
+//            testEvent.DateStart = DateTimeHelper.parseDateString("2015-07-22T15:00:00");
+//            testEvent.DateEnd = DateTimeHelper.parseDateString("2015-08-22T15:00:00");
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//
+//        api.executeRequest(new AddEventApiRequest(testApp, testEvent) {
+//            @Override
+//            public void onApiResponse(ApiRequestStatusResult result) {
+//                if(result.Status == ApiRequestStatusResult.StatusResult.Ok) {
+//                    log("Added!");
+//                }
+//                if(result.Status == ApiRequestStatusResult.StatusResult.Error) {
+//                    log("Error!");
+//                }
+//            }
+//        });
 
 
 
