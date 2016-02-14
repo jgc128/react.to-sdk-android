@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import to.react.sdk.android.reactto.Api.AddEventByLinkApiRequest;
+import to.react.sdk.android.reactto.Api.Model.ApiRequestStatusResult;
+import to.react.sdk.android.reactto.Api.Model.App;
 import to.react.sdk.android.reactto.Api.Model.Event;
 import to.react.sdk.android.reactto.Api.Model.EventTarget;
 import to.react.sdk.android.reactto.Api.EventTargetsApiRequest;
@@ -83,27 +86,45 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
 
+        App testApp = new App();
+        testApp.Id = 2;
+        api.executeRequest(new AddEventByLinkApiRequest(testApp, "http://www.twitch.tv/low4n") {
+            @Override
+            public void onApiResponse(ApiRequestStatusResult result) {
+                if(result.Status == ApiRequestStatusResult.StatusResult.Ok) {
+                    log("Added!");
+                }
+                if(result.Status == ApiRequestStatusResult.StatusResult.Error) {
+                    log("Error!");
+                }
+            }
+        });
+
+
+
+/*
         ortc = new ReactOrtc("cacRFz", "universal_event_channel_to_receive_reaction", "universal_event_channel_to_send_aggregate") {
             @Override
             public void onInteractionUpdate(final InteractionUpdateMessage message) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        testTextView.setText("Interaction:" + message.Value);
-                    }
-                });
+                log("Interaction: " + message.Value);
             }
 
             @Override
             public void onUsersCounterUpdate(UsersCounterUpdateMessage message) {
-
+                log("Users: " + message.Users);
             }
             @Override
             public void onSubscribed() {
+
                 Interaction testInteraction = new Interaction();
                 testInteraction.Id = 11;
                 testInteraction.Type = "FloatValueInteraction";
                 ortc.sendReaction("zzz", testInteraction, 0.3);
+
+//                Event testEvent = new Event();
+//                testEvent.Id = 10;
+//                ortc.sendUsersCounter("zzz", testEvent, UsersCounterType.Connect);
+//                ortc.sendUsersCounter("zzz", testEvent, UsersCounterType.Disconnect);
             }
         };
 
@@ -117,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
+*/
 
 
     }
@@ -142,5 +163,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void log(final String text) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                String currentText = testTextView.getText().toString();
+                String newText = currentText + "\n" + text;
+                testTextView.setText(newText);
+            }
+        });
+
     }
 }
