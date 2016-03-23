@@ -18,9 +18,15 @@ public class ReactBaseOrtc {
     protected OrtcClient client;
 
     public ReactBaseOrtc(String apiKey, String sendChannel, String receiveChannel) {
+        this(apiKey, sendChannel);
+        this.receiveChannel = receiveChannel;
+    }
+
+    public ReactBaseOrtc(String apiKey, String sendChannel) {
         this.apiKey = apiKey;
         this.sendChannel = sendChannel;
-        this.receiveChannel = receiveChannel;
+
+        this.receiveChannel = null;
     }
 
     protected void createOrtcClient() throws IllegalAccessException, ClassNotFoundException, InstantiationException {
@@ -36,14 +42,15 @@ public class ReactBaseOrtc {
         client.onConnected = new OnConnected() {
             @Override
             public void run(final OrtcClient sender) {
-                // Messaging client connected
-                client.subscribe(receiveChannel, true,
-                    new OnMessage() {
-                        public void run(OrtcClient sender, String channel, String message) {
-                            onMessage(message);
-                        };
-                    }
-                );
+                if(receiveChannel != null) {
+                    client.subscribe(receiveChannel, true,
+                            new OnMessage() {
+                                public void run(OrtcClient sender, String channel, String message) {
+                                    onMessage(message);
+                                };
+                            }
+                    );
+                }
             }
         };
 
@@ -71,7 +78,8 @@ public class ReactBaseOrtc {
     }
 
     public void init() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
-        createOrtcClient();
+        if (client == null)
+            createOrtcClient();
     }
 
     public void connect() {
@@ -88,5 +96,8 @@ public class ReactBaseOrtc {
 
     }
 
+    public boolean isReceivingOrtc() {
+        return receiveChannel != null;
+    }
 
 }

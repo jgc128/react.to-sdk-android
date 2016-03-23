@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import to.react.sdk.android.reactto.Api.Model.BaseReactMessage;
 import to.react.sdk.android.reactto.Api.Model.Event;
 import to.react.sdk.android.reactto.Api.Model.Interaction;
 import to.react.sdk.android.reactto.Api.Model.InteractionUpdateMessage;
@@ -23,6 +24,9 @@ public class ReactOrtc extends ReactBaseOrtc {
 
     public ReactOrtc(String apiKey, String sendChannel, String receiveChannel) {
         super(apiKey, sendChannel, receiveChannel);
+    }
+    public ReactOrtc(String apiKey, String sendChannel) {
+        super(apiKey, sendChannel);
     }
 
     @Override
@@ -40,7 +44,6 @@ public class ReactOrtc extends ReactBaseOrtc {
                 onUsersCounterUpdateMessage(jsonMsg);
             }
 
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -55,12 +58,12 @@ public class ReactOrtc extends ReactBaseOrtc {
         msg.Value = jsonMsg.getDouble("value");
 
         if (jsonMsg.has("mode")) {
-            msg.Mode =  InteractionUpdateMessage.InteractionMode.valueOf(jsonMsg.getString("mode"));
+            msg.Mode = InteractionUpdateMessage.InteractionMode.valueOf(jsonMsg.getString("mode"));
         } else {
             msg.Mode = InteractionUpdateMessage.InteractionMode.Positive;
         }
 
-        onInteractionUpdate(msg);
+        onReactMessage(msg);
     }
 
     protected void onUsersCounterUpdateMessage(JSONObject jsonMsg) throws JSONException {
@@ -72,18 +75,23 @@ public class ReactOrtc extends ReactBaseOrtc {
         msg.Male = jsonMsg.getLong("male");
         msg.Female = jsonMsg.getLong("female");
 
-        onUsersCounterUpdate(msg);
+        onReactMessage(msg);
     }
 
-    public void onInteractionUpdate(InteractionUpdateMessage message) {
+//    public void onInteractionUpdate(InteractionUpdateMessage message) {
+//
+//    }
+//
+//    public void onUsersCounterUpdate(UsersCounterUpdateMessage message) {
+//
+//    }
+
+    public void onReactMessage(BaseReactMessage message)
+    {
 
     }
 
-    public void onUsersCounterUpdate(UsersCounterUpdateMessage message) {
-
-    }
-
-
+    // TODO: refactor "send*" ?
     public void sendReaction(String deviceId, Interaction interaction, double value) {
 
         JSONObject jsonMsg = null;

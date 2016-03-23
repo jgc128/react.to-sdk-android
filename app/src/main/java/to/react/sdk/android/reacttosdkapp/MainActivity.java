@@ -18,6 +18,7 @@ import to.react.sdk.android.reactto.Api.AddEventApiRequest;
 import to.react.sdk.android.reactto.Api.AddEventByLinkApiRequest;
 import to.react.sdk.android.reactto.Api.Model.ApiRequestStatusResult;
 import to.react.sdk.android.reactto.Api.Model.App;
+import to.react.sdk.android.reactto.Api.Model.BaseReactMessage;
 import to.react.sdk.android.reactto.Api.Model.Event;
 import to.react.sdk.android.reactto.Api.Model.EventTarget;
 import to.react.sdk.android.reactto.Api.EventTargetsApiRequest;
@@ -26,6 +27,7 @@ import to.react.sdk.android.reactto.Api.Model.InteractionUpdateMessage;
 import to.react.sdk.android.reactto.Api.Model.NewEvent;
 import to.react.sdk.android.reactto.Api.Model.UsersCounterUpdateMessage;
 import to.react.sdk.android.reactto.Helpers.DateTimeHelper;
+import to.react.sdk.android.reactto.Helpers.React;
 import to.react.sdk.android.reactto.ReactApi;
 import to.react.sdk.android.reactto.ReactOrtc;
 
@@ -134,43 +136,72 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-/*
-        ortc = new ReactOrtc("cacRFz", "universal_event_channel_to_receive_reaction", "universal_event_channel_to_send_aggregate") {
-            @Override
-            public void onInteractionUpdate(final InteractionUpdateMessage message) {
-                log("Interaction: " + message.Value);
-            }
+//        ortc = new ReactOrtc("cacRFz", "universal_event_channel_to_receive_reaction", "universal_event_channel_to_send_aggregate") {
+//            @Override
+//            public void onInteractionUpdate(final InteractionUpdateMessage message) {
+//                log("Interaction: " + message.Value);
+//            }
+//
+//            @Override
+//            public void onUsersCounterUpdate(UsersCounterUpdateMessage message) {
+//                log("Users: " + message.Users);
+//            }
+//            @Override
+//            public void onSubscribed() {
+//
+//                Interaction testInteraction = new Interaction();
+//                testInteraction.Id = 11;
+//                testInteraction.Type = "FloatValueInteraction";
+//                ortc.sendReaction("zzz", testInteraction, 0.3);
+//
+////                Event testEvent = new Event();
+////                testEvent.Id = 10;
+////                ortc.sendUsersCounter("zzz", testEvent, UsersCounterType.Connect);
+////                ortc.sendUsersCounter("zzz", testEvent, UsersCounterType.Disconnect);
+//            }
+//        };
+//
+//        try {
+//            ortc.init();
+//            ortc.connect();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (InstantiationException e) {
+//            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
-            @Override
-            public void onUsersCounterUpdate(UsersCounterUpdateMessage message) {
-                log("Users: " + message.Users);
-            }
-            @Override
-            public void onSubscribed() {
 
-                Interaction testInteraction = new Interaction();
-                testInteraction.Id = 11;
-                testInteraction.Type = "FloatValueInteraction";
-                ortc.sendReaction("zzz", testInteraction, 0.3);
 
-//                Event testEvent = new Event();
-//                testEvent.Id = 10;
-//                ortc.sendUsersCounter("zzz", testEvent, UsersCounterType.Connect);
-//                ortc.sendUsersCounter("zzz", testEvent, UsersCounterType.Disconnect);
+        React r = new React(this, "cacRFz", "universal_event_channel_to_receive_reaction") {
+            @Override
+            public void onReactMessage(BaseReactMessage message) {
+                if (message instanceof InteractionUpdateMessage) {
+                    InteractionUpdateMessage ium = (InteractionUpdateMessage)message;
+
+                    log("Interaction: " + ium.InteractionId + " - " + ium.Value);
+                } else {
+                    log("Message: " + message.Action);
+                }
             }
         };
 
         try {
-            ortc.init();
-            ortc.connect();
+            r.connect();
+
+            Event testEvent = new Event();
+            testEvent.Id = 10;
+
+            r.subscribe(testEvent);
+
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
         }
-*/
 
 
     }

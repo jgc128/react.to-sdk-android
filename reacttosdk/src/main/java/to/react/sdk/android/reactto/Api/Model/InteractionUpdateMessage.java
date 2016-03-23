@@ -1,7 +1,8 @@
 package to.react.sdk.android.reactto.Api.Model;
 
 
-public class InteractionUpdateMessage {
+public class InteractionUpdateMessage extends BaseReactMessage {
+
     public enum InteractionMode
     {
         Negative,
@@ -9,7 +10,6 @@ public class InteractionUpdateMessage {
         Neutral
     }
 
-    public String Action;
     public double Value;
     public InteractionMode Mode;
     public long InteractionId;
