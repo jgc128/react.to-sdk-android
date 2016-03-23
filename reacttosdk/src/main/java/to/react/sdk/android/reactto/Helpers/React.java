@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import to.react.sdk.android.reactto.Api.BaseApiRequest;
 import to.react.sdk.android.reactto.Api.EventTargetsApiRequest;
@@ -33,6 +34,7 @@ public class React {
     protected Map<Long, Double> subscribedEventPreviousReactions = new HashMap<>();
     protected Handler subscribedEventHandler = new Handler();
     protected Runnable subscribedEventHandlerTask;
+    protected Random subscribedEventHandlerRand = new Random();
 
     public React(Context context, String apiKey, String sendChannel) {
         api = new ReactApi(context);
@@ -42,7 +44,10 @@ public class React {
             @Override
             public void run() {
                 updateInteraction();
-                subscribedEventHandler.postDelayed(subscribedEventHandlerTask, SUBSCRIBE_INTERVAL);
+                subscribedEventHandler.postDelayed(
+                        subscribedEventHandlerTask,
+                        getSubscribeInterval()
+                );
             }
         };
 
@@ -61,11 +66,18 @@ public class React {
             @Override
             public void run() {
                 updateInteraction();
-                subscribedEventHandler.postDelayed(subscribedEventHandlerTask, SUBSCRIBE_INTERVAL);
+                subscribedEventHandler.postDelayed(
+                        subscribedEventHandlerTask,
+                        getSubscribeInterval()
+                );
             }
         };
 
 
+    }
+
+    protected long getSubscribeInterval() {
+        return (long)(SUBSCRIBE_INTERVAL + (subscribedEventHandlerRand.nextFloat() - 0.5) * 100);
     }
 
     protected void updateInteraction() {
@@ -119,7 +131,6 @@ public class React {
                                 if (subscribedEventPreviousReactions.get(result.InteractionId) != result.Value) {
                                     subscribedEventPreviousReactions.put(result.InteractionId, result.Value);
                                     React.this.onReactMessage(result);
-
                                 }
                             }
                         };
