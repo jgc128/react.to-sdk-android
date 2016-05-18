@@ -14,22 +14,22 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.util.List;
 
-import to.react.sdk.android.reactto.Api.AddEventApiRequest;
-import to.react.sdk.android.reactto.Api.AddEventByLinkApiRequest;
-import to.react.sdk.android.reactto.Api.Model.ApiRequestStatusResult;
-import to.react.sdk.android.reactto.Api.Model.App;
-import to.react.sdk.android.reactto.Api.Model.BaseReactMessage;
-import to.react.sdk.android.reactto.Api.Model.Event;
-import to.react.sdk.android.reactto.Api.Model.EventTarget;
-import to.react.sdk.android.reactto.Api.EventTargetsApiRequest;
-import to.react.sdk.android.reactto.Api.Model.Interaction;
-import to.react.sdk.android.reactto.Api.Model.InteractionUpdateMessage;
-import to.react.sdk.android.reactto.Api.Model.NewEvent;
-import to.react.sdk.android.reactto.Api.Model.UsersCounterUpdateMessage;
-import to.react.sdk.android.reactto.Helpers.DateTimeHelper;
-import to.react.sdk.android.reactto.Helpers.React;
-import to.react.sdk.android.reactto.ReactApi;
-import to.react.sdk.android.reactto.ReactOrtc;
+import to.react.sdk.android.Api.AddEventApiRequest;
+import to.react.sdk.android.Api.AddEventByLinkApiRequest;
+import to.react.sdk.android.Api.Model.ApiRequestStatusResult;
+import to.react.sdk.android.Api.Model.App;
+import to.react.sdk.android.Api.Model.BaseReactMessage;
+import to.react.sdk.android.Api.Model.Event;
+import to.react.sdk.android.Api.Model.EventTarget;
+import to.react.sdk.android.Api.EventTargetsApiRequest;
+import to.react.sdk.android.Api.Model.Interaction;
+import to.react.sdk.android.Api.Model.InteractionUpdateMessage;
+import to.react.sdk.android.Api.Model.NewEvent;
+import to.react.sdk.android.Api.Model.UsersCounterUpdateMessage;
+import to.react.sdk.android.Helpers.DateTimeHelper;
+import to.react.sdk.android.Helpers.React;
+import to.react.sdk.android.ReactApi;
+import to.react.sdk.android.ReactOrtc;
 
 public class MainActivity extends AppCompatActivity {
 
