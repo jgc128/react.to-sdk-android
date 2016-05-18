@@ -1,5 +1,4 @@
-package to.react.sdk.android.reactto;
-
+package to.react.sdk;
 
 import ibt.ortc.api.Ortc;
 import ibt.ortc.extensibility.OnConnected;

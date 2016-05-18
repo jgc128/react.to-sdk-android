@@ -1,19 +1,16 @@
-package to.react.sdk.android.reactto;
-
+package to.react.sdk;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
-import to.react.sdk.android.reactto.Api.Model.BaseReactMessage;
-import to.react.sdk.android.reactto.Api.Model.Event;
-import to.react.sdk.android.reactto.Api.Model.Interaction;
-import to.react.sdk.android.reactto.Api.Model.InteractionUpdateMessage;
-import to.react.sdk.android.reactto.Api.Model.UsersCounterUpdateMessage;
-import to.react.sdk.android.reactto.Helpers.DateTimeHelper;
+import to.react.sdk.Api.Model.BaseReactMessage;
+import to.react.sdk.Api.Model.Event;
+import to.react.sdk.Api.Model.Interaction;
+import to.react.sdk.Api.Model.InteractionUpdateMessage;
+import to.react.sdk.Api.Model.UsersCounterUpdateMessage;
+import to.react.sdk.Helpers.DateTimeHelper;
 
 public class ReactOrtc extends ReactBaseOrtc {
     public enum UsersCounterType
@@ -129,8 +126,10 @@ public class ReactOrtc extends ReactBaseOrtc {
 
             sendMessage(jsonMsg.toString());
 
+
         } catch (JSONException e) {
             e.printStackTrace();
+
         }
     }
 }

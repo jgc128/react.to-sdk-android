@@ -1,13 +1,9 @@
-package to.react.sdk.android.reactto;
-
+package to.react.sdk;
 
 import android.content.Context;
 
-import to.react.sdk.android.reactto.Api.BaseApiRequest;
+import to.react.sdk.Api.BaseApiRequest;
 
-/**
- * ReactTo REST API
- */
 public class ReactApi {
 
     private Context mCtx;

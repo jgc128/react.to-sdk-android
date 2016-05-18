@@ -1,4 +1,4 @@
-package to.react.sdk.android.reactto.Helpers;
+package to.react.sdk.Helpers;
 
 
 import java.text.ParseException;

@@ -1,4 +1,4 @@
-package to.react.sdk.android.reactto;
+package to.react.sdk;
 
 import android.content.Context;
 import android.graphics.Bitmap;

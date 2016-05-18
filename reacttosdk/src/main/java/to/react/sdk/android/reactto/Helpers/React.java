@@ -1,4 +1,4 @@
-package to.react.sdk.android.reactto.Helpers;
+package to.react.sdk.Helpers;
 
 
 import android.content.Context;
@@ -8,19 +8,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
-import to.react.sdk.android.reactto.Api.BaseApiRequest;
-import to.react.sdk.android.reactto.Api.EventTargetsApiRequest;
-import to.react.sdk.android.reactto.Api.InteractionUpdateApiRequest;
-import to.react.sdk.android.reactto.Api.Model.ApiRequestStatusResult;
-import to.react.sdk.android.reactto.Api.Model.BaseReactMessage;
-import to.react.sdk.android.reactto.Api.Model.Event;
-import to.react.sdk.android.reactto.Api.Model.EventTarget;
-import to.react.sdk.android.reactto.Api.Model.Interaction;
-import to.react.sdk.android.reactto.Api.Model.InteractionUpdateMessage;
-import to.react.sdk.android.reactto.ReactApi;
-import to.react.sdk.android.reactto.ReactOrtc;
+import to.react.sdk.Api.BaseApiRequest;
+import to.react.sdk.Api.EventTargetsApiRequest;
+import to.react.sdk.Api.InteractionUpdateApiRequest;
+import to.react.sdk.Api.Model.BaseReactMessage;
+import to.react.sdk.Api.Model.Event;
+import to.react.sdk.Api.Model.EventTarget;
+import to.react.sdk.Api.Model.Interaction;
+import to.react.sdk.Api.Model.InteractionUpdateMessage;
+import to.react.sdk.ReactApi;
+import to.react.sdk.ReactOrtc;
 
 public class React {
 
@@ -34,7 +32,6 @@ public class React {
     protected Map<Long, Double> subscribedEventPreviousReactions = new HashMap<>();
     protected Handler subscribedEventHandler = new Handler();
     protected Runnable subscribedEventHandlerTask;
-    protected Random subscribedEventHandlerRand = new Random();
 
     public React(Context context, String apiKey, String sendChannel) {
         api = new ReactApi(context);
@@ -44,10 +41,7 @@ public class React {
             @Override
             public void run() {
                 updateInteraction();
-                subscribedEventHandler.postDelayed(
-                        subscribedEventHandlerTask,
-                        getSubscribeInterval()
-                );
+                subscribedEventHandler.postDelayed(subscribedEventHandlerTask, SUBSCRIBE_INTERVAL);
             }
         };
 
@@ -66,18 +60,11 @@ public class React {
             @Override
             public void run() {
                 updateInteraction();
-                subscribedEventHandler.postDelayed(
-                        subscribedEventHandlerTask,
-                        getSubscribeInterval()
-                );
+                subscribedEventHandler.postDelayed(subscribedEventHandlerTask, SUBSCRIBE_INTERVAL);
             }
         };
 
 
-    }
-
-    protected long getSubscribeInterval() {
-        return (long)(SUBSCRIBE_INTERVAL + (subscribedEventHandlerRand.nextFloat() - 0.5) * 100);
     }
 
     protected void updateInteraction() {
