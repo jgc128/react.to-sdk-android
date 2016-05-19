@@ -5,38 +5,30 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import java.sql.Date;
-import java.text.ParseException;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import java.util.ArrayList;
 import java.util.List;
 
-import to.react.sdk.android.Api.AddEventApiRequest;
-import to.react.sdk.android.Api.AddEventByLinkApiRequest;
-import to.react.sdk.android.Api.Model.ApiRequestStatusResult;
 import to.react.sdk.android.Api.Model.App;
 import to.react.sdk.android.Api.Model.BaseReactMessage;
 import to.react.sdk.android.Api.Model.Event;
-import to.react.sdk.android.Api.Model.EventTarget;
-import to.react.sdk.android.Api.EventTargetsApiRequest;
-import to.react.sdk.android.Api.Model.Interaction;
 import to.react.sdk.android.Api.Model.InteractionUpdateMessage;
-import to.react.sdk.android.Api.Model.NewEvent;
-import to.react.sdk.android.Api.Model.UsersCounterUpdateMessage;
-import to.react.sdk.android.Helpers.DateTimeHelper;
-import to.react.sdk.android.Helpers.React;
+import to.react.sdk.android.Api.Requests.AppsApiRequest;
 import to.react.sdk.android.ReactApi;
-import to.react.sdk.android.ReactOrtc;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView testTextView;
 
     ReactApi api;
-    ReactOrtc ortc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +50,14 @@ public class MainActivity extends AppCompatActivity {
 
         testTextView = (TextView)findViewById(R.id.test);
         testTextView.setText("zzzz");
+
+        api.executeRequest(new AppsApiRequest() {
+            @Override
+            public void onApiResponse(List<App> result) {
+                testTextView.setText(result.get(0).Name);
+            }
+        });
+
 
 
 
@@ -173,35 +173,35 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
 
-
-        React r = new React(this, "cacRFz", "universal_event_channel_to_receive_reaction") {
-            @Override
-            public void onReactMessage(BaseReactMessage message) {
-                if (message instanceof InteractionUpdateMessage) {
-                    InteractionUpdateMessage ium = (InteractionUpdateMessage)message;
-
-                    log("Interaction: " + ium.InteractionId + " - " + ium.Value);
-                } else {
-                    log("Message: " + message.Action);
-                }
-            }
-        };
-
-        try {
-            r.connect();
-
-            Event testEvent = new Event();
-            testEvent.Id = 10;
-
-            r.subscribe(testEvent);
-
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        }
+//
+//        React r = new React(this, "cacRFz", "universal_event_channel_to_receive_reaction") {
+//            @Override
+//            public void onReactMessage(BaseReactMessage message) {
+//                if (message instanceof InteractionUpdateMessage) {
+//                    InteractionUpdateMessage ium = (InteractionUpdateMessage)message;
+//
+//                    log("Interaction: " + ium.InteractionId + " - " + ium.Value);
+//                } else {
+//                    log("Message: " + message.Action);
+//                }
+//            }
+//        };
+//
+//        try {
+//            r.connect();
+//
+//            Event testEvent = new Event();
+//            testEvent.Id = 10;
+//
+//            r.subscribe(testEvent);
+//
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (InstantiationException e) {
+//            e.printStackTrace();
+//        }
 
 
     }
