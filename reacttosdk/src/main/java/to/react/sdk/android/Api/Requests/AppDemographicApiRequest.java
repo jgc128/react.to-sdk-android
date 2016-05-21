@@ -10,7 +10,7 @@ import java.util.List;
 import to.react.sdk.android.Api.Model.App;
 import to.react.sdk.android.Api.Model.DemographicCategory;
 
-public abstract class AppDemographicApiRequest extends BaseApiRequest<List<DemographicCategory>> {
+public abstract class AppDemographicApiRequest extends BaseApiListRequest<List<DemographicCategory>> {
     App targetApp;
 
     public AppDemographicApiRequest(App targetApp) {
@@ -20,13 +20,6 @@ public abstract class AppDemographicApiRequest extends BaseApiRequest<List<Demog
     @Override
     protected String getRequestUrl() {
         return "universal_event/apps/" + targetApp.Id + "/demographics/";
-    }
-
-    @Override
-    protected List<DemographicCategory> getObject(JsonElement json) throws Exception {
-        JsonElement jsonRes = ((JsonObject)json).getAsJsonArray("results");
-
-        return super.getObject(jsonRes);
     }
 
     @Override

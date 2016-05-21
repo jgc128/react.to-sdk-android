@@ -16,18 +16,11 @@ import java.util.List;
 import to.react.sdk.android.Api.Model.App;
 
 
-public abstract class AppsApiRequest extends BaseApiRequest<List<App>> {
+public abstract class AppsApiRequest extends BaseApiListRequest<List<App>> {
 
     @Override
     protected String getRequestUrl() {
         return "universal_event/apps/";
-    }
-
-    @Override
-    protected List<App> getObject(JsonElement json) throws Exception {
-        JsonElement jsonRes = ((JsonObject)json).getAsJsonArray("results");
-
-        return super.getObject(jsonRes);
     }
 
     @Override
