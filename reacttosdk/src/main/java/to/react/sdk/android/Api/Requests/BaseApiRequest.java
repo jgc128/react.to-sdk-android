@@ -17,6 +17,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -35,6 +36,8 @@ import java.util.Map;
 public abstract class BaseApiRequest<T> {
 
     protected static String logTag = "ReactToSdk";
+
+    protected static String dateFormat = "yyyy-MM-dd'T'HH:mm:ss";
 
     public Request getRequest(String baseUrl) {
         String url = baseUrl + getRequestUrl();
@@ -105,7 +108,7 @@ public abstract class BaseApiRequest<T> {
 
     protected T getObject(JsonElement json) throws Exception {
         Type type = getType();
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat(dateFormat).create();
 
         T result = gson.fromJson(json, type);
 
