@@ -33,10 +33,11 @@ import java.util.Map;
 
 // Based on https://developer.android.com/training/volley/request-custom.html
 public abstract class BaseApiRequest<T> {
-    protected final String baseUrl = "http://react.flowmaster.org/";
 
-    public Request getRequest() {
-        String url = getUrl();
+    protected static String logTag = "ReactToSdk";
+
+    public Request getRequest(String baseUrl) {
+        String url = baseUrl + getRequestUrl();
         Response.Listener listener = createListener();
         Response.ErrorListener errorListener = createErrorListener();
         Request request = createRequest(url, listener, errorListener);
@@ -52,7 +53,7 @@ public abstract class BaseApiRequest<T> {
                     onApiResponse(result);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.e("___3", "error)-" + e.getMessage());
+                    Log.e(logTag, e.getMessage());
                     onApiError(e.getMessage());
                 }
             }
@@ -65,7 +66,6 @@ public abstract class BaseApiRequest<T> {
             public void onErrorResponse(VolleyError error) {
                 String errorMsg = error.getMessage();
                 onApiError(errorMsg);
-                Log.e("---", "error" + errorMsg);
             }
         };
 
@@ -84,11 +84,8 @@ public abstract class BaseApiRequest<T> {
         return  request;
     }
 
-    abstract public void onApiResponse(T result);
-    abstract public void onApiError(String error);
-
-    protected String getUrl() {
-        return baseUrl;
+    protected String getRequestUrl() {
+        return "";
     }
     protected Map<String, String> getHeaders(){
         return new HashMap<>();
@@ -114,6 +111,10 @@ public abstract class BaseApiRequest<T> {
         return result;
     }
 
+    public void onApiError(String error) {
+        Log.e(logTag, error);
+    }
 
+    abstract public void onApiResponse(T result);
 
 }

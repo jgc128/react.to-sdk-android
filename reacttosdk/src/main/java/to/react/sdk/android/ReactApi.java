@@ -2,6 +2,8 @@ package to.react.sdk.android;
 
 import android.content.Context;
 
+import com.android.volley.Request;
+
 import to.react.sdk.android.Api.Requests.BaseApiRequest;
 
 public class ReactApi {
@@ -16,7 +18,8 @@ public class ReactApi {
     }
 
     public void executeRequest(BaseApiRequest request){
-        ReactApiSingleton.getInstance(mCtx).addToRequestQueue(request.getRequest());
+        Request req = request.getRequest(serverAddress);
+        ReactApiSingleton.getInstance(mCtx).addToRequestQueue(req);
     }
 
 }

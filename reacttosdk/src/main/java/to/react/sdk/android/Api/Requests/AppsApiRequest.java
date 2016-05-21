@@ -16,11 +16,11 @@ import java.util.List;
 import to.react.sdk.android.Api.Model.App;
 
 
-public class AppsApiRequest extends BaseApiRequest<List<App>> {
+public abstract class AppsApiRequest extends BaseApiRequest<List<App>> {
 
     @Override
-    protected String getUrl() {
-        return baseUrl + "universal_event/apps/";
+    protected String getRequestUrl() {
+        return "universal_event/apps/";
     }
 
     @Override
@@ -35,13 +35,4 @@ public class AppsApiRequest extends BaseApiRequest<List<App>> {
         return new TypeToken<List<App>>(){}.getType();
     }
 
-    @Override
-    public void onApiResponse(List<App> result) {
-
-    }
-
-    @Override
-    public void onApiError(String error) {
-
-    }
 }
