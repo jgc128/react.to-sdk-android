@@ -87,6 +87,7 @@ public abstract class BaseApiRequest<T> {
     protected String getRequestUrl() {
         return "";
     }
+
     protected Map<String, String> getHeaders(){
         return new HashMap<>();
     }
