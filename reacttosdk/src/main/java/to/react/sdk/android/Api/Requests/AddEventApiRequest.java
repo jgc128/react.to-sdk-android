@@ -1,61 +1,48 @@
 package to.react.sdk.android.Api.Requests;
 
-//
-//public class AddEventApiRequest extends BaseApiPostRequest<ApiRequestStatusResult> {
-//
-//    App targetApp;
-//    NewEvent targetEvent;
-//
-//    public AddEventApiRequest(App app, NewEvent event) {
-//        targetApp = app;
-//        targetEvent = event;
-//    }
-//
-//    @Override
-//    protected String getUrl() {
-//        return baseUrl + "universal_event/apps/" + targetApp.Id + "/events/add/";
-//    }
-//
-//    @Override
-//    protected Map<String, String> getParams() {
-//
-//        Map<String, String> params = new HashMap<>();
-//
-//        params.put("name", targetEvent.Name);
-//        params.put("description", targetEvent.Description);
-//        params.put("start_date", Long.toString(DateTimeHelper.DateToUnixTimeStamp(targetEvent.DateStart)));
-//        params.put("end_date", Long.toString(DateTimeHelper.DateToUnixTimeStamp(targetEvent.DateEnd)));
-//        params.put("negative_reactions", Boolean.toString(targetEvent.IsNegativeReactions));
-//
-//        params.put("is_two", targetEvent.IsTwoTarget ? "1" : "0");
-//
-//        if (targetEvent.IsTwoTarget) {
-//            params.put("target_one", targetEvent.TargetOne);
-//            params.put("target_two", targetEvent.TargetTwo);
-//        }
-//
-//        return params;
-//    }
-//
-//
-//    @Override
-//    protected ApiRequestStatusResult getFromJson(JSONObject json) throws Exception {
-//        String strStatus = StringHelper.toTitleCase(json.getJSONObject("response").getString("status"));
-//
-//        ApiRequestStatusResult result = new ApiRequestStatusResult();
-//        result.Status = ApiRequestStatusResult.StatusResult.valueOf(strStatus);
-//
-//        return result;
-//
-//    }
-//
-//    @Override
-//    public void onApiResponse(ApiRequestStatusResult result) {
-//
-//    }
-//
-//    @Override
-//    public void onApiError(String error) {
-//
-//    }
-//}
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import to.react.sdk.android.Api.Model.App;
+import to.react.sdk.android.Api.Model.Event;
+import to.react.sdk.android.Api.Model.NewEvent;
+import to.react.sdk.android.Helpers.DateTimeHelper;
+
+public abstract class AddEventApiRequest extends BaseApiPostRequest<Event> {
+
+    App targetApp;
+    NewEvent targetEvent;
+
+    public AddEventApiRequest(App app, NewEvent event) {
+        targetApp = app;
+        targetEvent = event;
+    }
+
+    @Override
+    protected String getRequestUrl() {
+        return "universal_event/events/add/";
+    }
+
+    @Override
+    protected Type getType() {
+        return new TypeToken<Event>(){}.getType();
+    }
+
+
+    @Override
+    protected JsonElement getData() {
+        JsonObject data = (JsonObject)gson.toJsonTree(targetEvent);
+        data.addProperty("application", targetApp.Id);
+
+        return data;
+    }
+
+
+}

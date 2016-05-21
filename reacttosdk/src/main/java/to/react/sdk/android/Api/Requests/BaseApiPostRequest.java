@@ -1,52 +1,50 @@
 package to.react.sdk.android.Api.Requests;
 
 
+import android.util.Log;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.JsonElement;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 import to.react.sdk.android.Api.Requests.BaseApiRequest;
 
-//public abstract class BaseApiPostRequest<T> extends BaseApiRequest<T> {
-//
-//    @Override
-//    protected Response.Listener createListener() {
-//        Response.Listener<String> listener =  new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                try {
-//                    JSONObject  jsonResponse = new JSONObject(response);
-//
-//                    onJsonResponse(jsonResponse);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//
-//                    onApiError(e.getMessage());
-//                }
-//            }
-//        };
-//
-//        return listener;
-//    }
-//
-//    @Override
-//    protected Request createRequest(String url, Response.Listener listener, Response.ErrorListener errorListener) {
-//        final Map<String, String> requestParams = getParams();
-//
-//        StringRequest request = new StringRequest(Request.Method.POST, url, listener, errorListener) {
-//            protected Map<String, String> getParams() throws com.android.volley.AuthFailureError {
-//                return requestParams;
-//            };
-//        };
-//
-//        return request;
-//    }
-//
-//    abstract protected Map<String, String> getParams();
-//
-//}
+public abstract class BaseApiPostRequest<T> extends BaseApiRequest<T> {
+
+    @Override
+    protected Request createRequest(String url, Response.Listener listener, Response.ErrorListener errorListener) {
+        final Map<String, String> headers = getHeaders();
+
+        StringRequest request = new StringRequest(Request.Method.POST,url, listener, errorListener){
+            @Override
+            public String getBodyContentType() {
+                return PROTOCOL_CONTENT_TYPE;
+            }
+            @Override
+            public byte[] getBody() {
+                JsonElement data = getData();
+                String post_data = data.toString();
+                try {
+                    byte[] body = post_data.getBytes(PROTOCOL_CHARSET);
+                    return body;
+                } catch (UnsupportedEncodingException e) {
+                    Log.e(logTag, e.getMessage());
+                    return null;
+                }
+            }
+            public Map<String, String> getHeaders() {
+                return headers;
+            }
+        };
+        return  request;
+    }
+
+    abstract protected JsonElement getData();
+}

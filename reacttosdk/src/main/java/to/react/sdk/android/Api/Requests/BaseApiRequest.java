@@ -28,16 +28,24 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 // Based on https://developer.android.com/training/volley/request-custom.html
 public abstract class BaseApiRequest<T> {
+    protected static final String PROTOCOL_CHARSET = StandardCharsets.UTF_8.displayName();//"utf-8";
+    protected static final String PROTOCOL_CONTENT_TYPE = String.format("application/json; charset=%s", PROTOCOL_CHARSET);
+    protected static String dateFormat = "yyyy-MM-dd'T'HH:mm:ss";
+
+    protected Gson gson;
 
     protected static String logTag = "ReactToSdk";
 
-    protected static String dateFormat = "yyyy-MM-dd'T'HH:mm:ss";
+    public BaseApiRequest(){
+        gson = new GsonBuilder().setDateFormat(dateFormat).create();
+    }
 
     public Request getRequest(String baseUrl) {
         String url = baseUrl + getRequestUrl();
@@ -67,8 +75,8 @@ public abstract class BaseApiRequest<T> {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errorMsg = error.getMessage();
-                onApiError(errorMsg);
+                String apiErrorMessage = new String(error.networkResponse.data, StandardCharsets.UTF_8);
+                onApiError(apiErrorMessage);
             }
         };
 
@@ -108,8 +116,6 @@ public abstract class BaseApiRequest<T> {
 
     protected T getObject(JsonElement json) throws Exception {
         Type type = getType();
-        Gson gson = new GsonBuilder().setDateFormat(dateFormat).create();
-
         T result = gson.fromJson(json, type);
 
         return result;
