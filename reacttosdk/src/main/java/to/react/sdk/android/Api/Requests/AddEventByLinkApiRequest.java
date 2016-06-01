@@ -1,46 +1,41 @@
 package to.react.sdk.android.Api.Requests;
 
 
-//public class AddEventByLinkApiRequest extends BaseApiPostRequest<ApiRequestStatusResult> {
-//    App targetApp;
-//    String eventLink;
-//
-//    public AddEventByLinkApiRequest(App app, String eventLink) {
-//        targetApp = app;
-//        this.eventLink = eventLink;
-//    }
-//
-//    @Override
-//    protected String getUrl() {
-//        return baseUrl + "universal_event/apps/" + targetApp.Id + "/events/add_by_link/";
-//    }
-//
-//    @Override
-//    protected Map<String, String> getParams() {
-//        Map<String, String> params = new HashMap<>();
-//
-//        params.put("link", eventLink);
-//
-//        return params;
-//    }
-//
-//    @Override
-//    protected ApiRequestStatusResult getFromJson(JSONObject json) throws Exception {
-//        String strStatus = StringHelper.toTitleCase(json.getJSONObject("response").getString("status"));
-//
-//        ApiRequestStatusResult result = new ApiRequestStatusResult();
-//        result.Status = ApiRequestStatusResult.StatusResult.valueOf(strStatus);
-//
-//        return result;
-//    }
-//
-//    @Override
-//    public void onApiResponse(ApiRequestStatusResult result) {
-//
-//    }
-//
-//    @Override
-//    public void onApiError(String error) {
-//
-//    }
-//}
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+
+import to.react.sdk.android.Api.Model.App;
+import to.react.sdk.android.Api.Model.Event;
+
+public abstract class AddEventByLinkApiRequest extends BaseApiPostRequest<Event> {
+    App targetApp;
+    String eventLink;
+
+    public AddEventByLinkApiRequest(App app, String eventLink) {
+        targetApp = app;
+        this.eventLink = eventLink;
+    }
+
+    @Override
+    protected String getRequestUrl() {
+        return "universal_event/events/add_by_link/";
+    }
+
+    @Override
+    protected Type getType() {
+        return new TypeToken<Event>(){}.getType();
+    }
+
+
+    @Override
+    protected JsonElement getData() {
+        JsonObject data = new JsonObject();
+        data.addProperty("application", targetApp.Id);
+        data.addProperty("link", eventLink);
+
+        return data;
+    }
+}
