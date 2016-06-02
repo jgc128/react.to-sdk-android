@@ -12,8 +12,8 @@ import java.util.Map;
 import to.react.sdk.android.Api.Model.App;
 import to.react.sdk.android.Api.Model.User;
 
-public abstract class UserApiRequest  extends BaseApiAuthRequest<User> {
-    public UserApiRequest(String accessToken) {
+public abstract class AccountUserApiRequest extends BaseApiAuthRequest<User> {
+    public AccountUserApiRequest(String accessToken) {
         super(accessToken);
     }
 
