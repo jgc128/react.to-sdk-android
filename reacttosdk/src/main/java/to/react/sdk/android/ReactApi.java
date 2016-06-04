@@ -28,6 +28,7 @@ public class ReactApi {
     protected static String logTag = "ReactToSdk";
     protected static String dateFormat = "yyyy-MM-dd'T'HH:mm:ss";
 
+    private String serverAddress = "https://react.flowmaster.org/";
 //    private String serverAddress = "http://flowmaster.org:8080/";
     private String wsAddress = "wss://react.flowmaster.org/realtime/clients/universal_event";
 
