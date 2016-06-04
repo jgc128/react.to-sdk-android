@@ -1,17 +1,13 @@
 package to.react.sdk.android.Api.Model;
 
 
+import com.google.gson.annotations.SerializedName;
+
 public class InteractionUpdateMessage extends BaseReactMessage {
-
-    public enum InteractionMode
-    {
-        Negative,
-        Positive,
-        Neutral
-    }
-
-    public double Value;
-    public InteractionMode Mode;
+    @SerializedName("interaction_id")
     public long InteractionId;
-    public String InteractionType;
+
+    @SerializedName("value")
+    public int Value;
+
 }
