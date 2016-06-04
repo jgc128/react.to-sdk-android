@@ -11,17 +11,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import to.react.sdk.android.Api.Model.App;
 import to.react.sdk.android.Api.Model.BaseReactMessage;
-import to.react.sdk.android.Api.Model.Event;
 import to.react.sdk.android.Api.Model.InteractionUpdateMessage;
-import to.react.sdk.android.Api.Requests.AppsApiRequest;
+import to.react.sdk.android.Api.Model.ReactionMessage;
+import to.react.sdk.android.Api.Model.User;
+import to.react.sdk.android.Api.Requests.AccountLogoutApiRequest;
+import to.react.sdk.android.Api.Requests.AccountUserApiRequest;
 import to.react.sdk.android.ReactApi;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,19 +41,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        api = new ReactApi(this);
-
         testTextView = (TextView)findViewById(R.id.test);
         testTextView.setText("zzzz");
 
-        api.executeRequest(new AppsApiRequest() {
+
+
+        api = new ReactApi(this) {
             @Override
-            public void onApiResponse(List<App> result) {
-                testTextView.setText(result.get(0).Name);
+            public void onReactMessage(BaseReactMessage message) {
+                if (message instanceof InteractionUpdateMessage) {
+                    InteractionUpdateMessage msg = (InteractionUpdateMessage)message;
+                    log(String.valueOf(msg.Value));
+                }
             }
-        });
-
-
+            @Override
+            public void onReactConnected() {
+                api.sendMessage(new ReactionMessage("zzz", 5));
+            }
+        };
 
 
 //        api.executeRequest(new AppsApiRequest() {
@@ -68,51 +68,46 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
+//        api.executeRequest(new AccountUserApiRequest("9a4b10e44d2f000e060e599d41fe3e0e26652d45") {
+//            @Override
+//            public void onApiResponse(User result) {
+//                testTextView.setText(Long.toString(result.Id));
+//            }
+//        });
 
-//        App testApp = new App();
-//        testApp.Id = 2;
-//        api.executeRequest(new AppEventsApiRequest(testApp) {
+//        App targetApp = new App();
+//        targetApp.Id = 1;
+//        api.executeRequest(new AppDemographicApiRequest(targetApp) {
+//            @Override
+//            public void onApiResponse(List<DemographicCategory> result) {
+//                testTextView.setText(result.get(0).Name);
+//            }
+//        });
+
+
+//        App targetApp = new App();
+//        targetApp.Id = 1;
+//        api.executeRequest(new AppEventsApiRequest(targetApp) {
 //            @Override
 //            public void onApiResponse(List<Event> result) {
-//                testTextView.setText(result.get(0).Name + "\n" + result.get(1).Name + "\n" + result.get(2).Name);
+//                testTextView.setText(result.get(0).Name);
 //            }
 //        });
 
-
-//        Event testEvent = new Event();
-//        testEvent.Id = 10;
-//        api.executeRequest(new EventTargetsApiRequest(testEvent) {
+//        Event targetEvent = new Event();
+//        targetEvent.Id = 31;
+//        api.executeRequest(new EventDetailsApiRequest(targetEvent) {
 //            @Override
-//            public void onApiResponse(List<EventTarget> result) {
-//                testTextView.setText(
-//                        result.get(0).Name + "\n" + result.get(1).Name
-//                        + "\n\n" + result.get(0).Interactions.get(0).Id
-//                        + " - " + result.get(0).Interactions.get(0).MinValue + ":" + result.get(0).Interactions.get(0).MaxValue
-//                );
+//            public void onApiResponse(Event result) {
+//                testTextView.setText(result.Name);
 //            }
 //        });
 
 
 //        App testApp = new App();
-//        testApp.Id = 2;
-//        api.executeRequest(new AddEventByLinkApiRequest(testApp, "http://www.twitch.tv/low4n") {
-//            @Override
-//            public void onApiResponse(ApiRequestStatusResult result) {
-//                if(result.Status == ApiRequestStatusResult.StatusResult.Ok) {
-//                    log("Added!");
-//                }
-//                if(result.Status == ApiRequestStatusResult.StatusResult.Error) {
-//                    log("Error!");
-//                }
-//            }
-//        });
-
-
-
-//        App testApp = new App();
-//        testApp.Id = 2;
+//        testApp.Id = 1;
 //        NewEvent testEvent = new NewEvent();
-//        testEvent.Name = "zzzz - sdk android";
+//        testEvent.Name = "zzzz - sdk android test 2";
 //        testEvent.Description = "zzzzzz";
 //
 //        try {
@@ -124,84 +119,47 @@ public class MainActivity extends AppCompatActivity {
 //
 //        api.executeRequest(new AddEventApiRequest(testApp, testEvent) {
 //            @Override
-//            public void onApiResponse(ApiRequestStatusResult result) {
-//                if(result.Status == ApiRequestStatusResult.StatusResult.Ok) {
-//                    log("Added!");
-//                }
-//                if(result.Status == ApiRequestStatusResult.StatusResult.Error) {
-//                    log("Error!");
-//                }
+//            public void onApiResponse(Event result) {
+//                testTextView.setText(result.Name);
+//            }
+//        });
+
+
+//        App testApp = new App();
+//        testApp.Id = 1;
+//        String testLink = "https://www.twitch.tv/nyxeira";
+//        api.executeRequest(new AddEventByLinkApiRequest(testApp, testLink) {
+//            @Override
+//            public void onApiResponse(Event result) {
+//                testTextView.setText(result.Name);
 //            }
 //        });
 
 
 
-//        ortc = new ReactOrtc("cacRFz", "universal_event_channel_to_receive_reaction", "universal_event_channel_to_send_aggregate") {
+//        LoginInfo testLogin = new LoginInfo();
+//        testLogin.AccessToken = "EAAIItymR5iwBALFZBtCIKojnuRf06JbWCOSMiLSITO7R8cAHq1C7FFZCzhI240V3I45eS53ZAWvpw9ft6iYxomlN6KX4Wn9PiG1Tp75WPohU6RV25SIAt0jvU1IiaoKUneH5wglqzbaR32lH452OgssA9YUo6p8MsWCvZBTyCFuMZBK5tqzoC";
+//        testLogin.DeviceId = "test_device";
+//        testLogin.SocialNetwork = LoginInfo.SocialNetworks.Facebook;
+//
+//        api.executeRequest(new AccountLoginApiRequest(testLogin) {
 //            @Override
-//            public void onInteractionUpdate(final InteractionUpdateMessage message) {
-//                log("Interaction: " + message.Value);
+//            public void onApiResponse(LoginInfo.UserToken result) {
+//                testTextView.setText(result.Token);
 //            }
-//
-//            @Override
-//            public void onUsersCounterUpdate(UsersCounterUpdateMessage message) {
-//                log("Users: " + message.Users);
-//            }
-//            @Override
-//            public void onSubscribed() {
-//
-//                Interaction testInteraction = new Interaction();
-//                testInteraction.Id = 11;
-//                testInteraction.Type = "FloatValueInteraction";
-//                ortc.sendReaction("zzz", testInteraction, 0.3);
-//
-////                Event testEvent = new Event();
-////                testEvent.Id = 10;
-////                ortc.sendUsersCounter("zzz", testEvent, UsersCounterType.Connect);
-////                ortc.sendUsersCounter("zzz", testEvent, UsersCounterType.Disconnect);
-//            }
-//        };
-//
-//        try {
-//            ortc.init();
-//            ortc.connect();
-//        } catch (IllegalAccessException e) {
-//            e.printStackTrace();
-//        } catch (InstantiationException e) {
-//            e.printStackTrace();
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
+//        });
 
 
-//
-//        React r = new React(this, "cacRFz", "universal_event_channel_to_receive_reaction") {
+//        api.executeRequest(new AccountLogoutApiRequest("166a5394b8127f1266a8e67e49a0cd25af063957") {
 //            @Override
-//            public void onReactMessage(BaseReactMessage message) {
-//                if (message instanceof InteractionUpdateMessage) {
-//                    InteractionUpdateMessage ium = (InteractionUpdateMessage)message;
-//
-//                    log("Interaction: " + ium.InteractionId + " - " + ium.Value);
-//                } else {
-//                    log("Message: " + message.Action);
-//                }
+//            public void onApiResponse(String result) {
+//                testTextView.setText(result);
 //            }
-//        };
-//
-//        try {
-//            r.connect();
-//
-//            Event testEvent = new Event();
-//            testEvent.Id = 10;
-//
-//            r.subscribe(testEvent);
-//
-//        } catch (IllegalAccessException e) {
-//            e.printStackTrace();
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (InstantiationException e) {
-//            e.printStackTrace();
-//        }
+//        });
+
+
+
+
 
 
     }

@@ -10,7 +10,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
 // http://developer.android.com/training/volley/requestqueue.html
-public class ReactApiSingleton {
+class ReactApiSingleton {
     private static ReactApiSingleton mInstance;
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;

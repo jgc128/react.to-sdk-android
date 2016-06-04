@@ -7,9 +7,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import to.react.sdk.android.Api.Model.Account;
-import to.react.sdk.android.Helpers.StringHelper;
-
+//import to.react.sdk.android.Api.Model.Account;
+//import to.react.sdk.android.Helpers.StringHelper;
+//
 //public class AccountGeoFriendsApiRequest extends BaseApiRequest<List<Account>> {
 //
 //    Account account;
