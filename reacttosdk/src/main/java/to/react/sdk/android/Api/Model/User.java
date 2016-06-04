@@ -46,7 +46,7 @@ public class User {
     public class UserDemographicChoice
     {
         @SerializedName("id")
-        public int CategoryId;
+        public int Id;
 
         @SerializedName("choice")
         public int ChoiceId;

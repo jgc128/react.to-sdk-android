@@ -17,6 +17,7 @@ import to.react.sdk.android.Api.Model.ReactionMessage;
 import to.react.sdk.android.Api.Model.User;
 import to.react.sdk.android.Api.Requests.AccountLogoutApiRequest;
 import to.react.sdk.android.Api.Requests.AccountUserApiRequest;
+import to.react.sdk.android.Api.Requests.AccountUserDemographicsApiRequest;
 import to.react.sdk.android.ReactApi;
 
 public class MainActivity extends AppCompatActivity {
@@ -157,8 +158,12 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-
-
+//        api.executeRequest(new AccountUserDemographicsApiRequest("50177533757d231b7045ab23ce388b50a754e461", 1) {
+//            @Override
+//            public void onApiResponse(User.UserDemographicChoice result) {
+//                testTextView.setText(String.valueOf(result.ChoiceId));
+//            }
+//        });
 
 
 
