@@ -18,11 +18,22 @@ import to.react.sdk.android.Api.Requests.BaseApiRequest;
 
 public abstract class BaseApiPostRequest<T> extends BaseApiRequest<T> {
 
+    int method;
+
+    public BaseApiPostRequest()
+    {
+        this(Request.Method.POST);
+    }
+    public BaseApiPostRequest(int method)
+    {
+        this.method = method;
+    }
+
     @Override
     protected Request createRequest(String url, Response.Listener listener, Response.ErrorListener errorListener) {
         final Map<String, String> headers = getHeaders();
 
-        StringRequest request = new StringRequest(Request.Method.POST,url, listener, errorListener){
+        StringRequest request = new StringRequest(this.method, url, listener, errorListener){
             @Override
             public String getBodyContentType() {
                 return PROTOCOL_CONTENT_TYPE;

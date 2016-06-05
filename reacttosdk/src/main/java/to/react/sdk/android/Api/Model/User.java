@@ -24,6 +24,9 @@ public class User {
         @SerializedName("last_name")
         public String LastName;
 
+        @SerializedName("age")
+        public int Age;
+
         @SerializedName("gender")
         public Gender Gender;
 

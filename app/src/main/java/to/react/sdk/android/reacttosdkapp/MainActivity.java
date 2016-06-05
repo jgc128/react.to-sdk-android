@@ -13,11 +13,13 @@ import android.widget.TextView;
 
 import to.react.sdk.android.Api.Model.BaseReactMessage;
 import to.react.sdk.android.Api.Model.InteractionUpdateMessage;
+import to.react.sdk.android.Api.Model.ProfileUpdate;
 import to.react.sdk.android.Api.Model.ReactionMessage;
 import to.react.sdk.android.Api.Model.User;
 import to.react.sdk.android.Api.Requests.AccountLogoutApiRequest;
 import to.react.sdk.android.Api.Requests.AccountUserApiRequest;
 import to.react.sdk.android.Api.Requests.AccountUserDemographicsApiRequest;
+import to.react.sdk.android.Api.Requests.AccountUserProfileUpdateApiRequest;
 import to.react.sdk.android.ReactApi;
 
 public class MainActivity extends AppCompatActivity {
@@ -158,14 +160,23 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-//        api.executeRequest(new AccountUserDemographicsApiRequest("50177533757d231b7045ab23ce388b50a754e461", 1) {
+        api.executeRequest(new AccountUserDemographicsApiRequest("be0513634862d7b8864d08ecf02afeff2ce2ac98", 1) {
+            @Override
+            public void onApiResponse(User.UserDemographicChoice result) {
+                testTextView.setText(String.valueOf(result.ChoiceId));
+            }
+        });
+
+//        int targetProfileId = 7;
+//        ProfileUpdate newProfile = new ProfileUpdate();
+//        newProfile.FirstName = "ZzzzFirst";
+//        newProfile.LastName = "ZzzzLast";
+//        api.executeRequest(new AccountUserProfileUpdateApiRequest("be0513634862d7b8864d08ecf02afeff2ce2ac98", targetProfileId, newProfile) {
 //            @Override
-//            public void onApiResponse(User.UserDemographicChoice result) {
-//                testTextView.setText(String.valueOf(result.ChoiceId));
+//            public void onApiResponse(User.Profile result) {
+//                log(result.FirstName);
 //            }
 //        });
-
-
 
     }
 
