@@ -1,9 +1,11 @@
 package to.react.sdk.android.Api.Requests;
 
 
-import android.annotation.TargetApi;
-import android.os.Build;
-import android.util.ArrayMap;
+//import android.annotation.TargetApi;
+//import android.os.Build;
+//import android.util.ArrayMap;
+//import android.util.Log;
+
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;

@@ -5,28 +5,27 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.util.List;
+
+import to.react.sdk.android.Api.Model.App;
 import to.react.sdk.android.Api.Model.BaseReactMessage;
 import to.react.sdk.android.Api.Model.InteractionUpdateMessage;
-import to.react.sdk.android.Api.Model.ProfileUpdate;
 import to.react.sdk.android.Api.Model.ReactionMessage;
-import to.react.sdk.android.Api.Model.User;
-import to.react.sdk.android.Api.Requests.AccountLogoutApiRequest;
-import to.react.sdk.android.Api.Requests.AccountUserApiRequest;
-import to.react.sdk.android.Api.Requests.AccountUserDemographicsApiRequest;
-import to.react.sdk.android.Api.Requests.AccountUserProfileUpdateApiRequest;
+import to.react.sdk.android.Api.Requests.AppsApiRequest;
+import to.react.sdk.android.Helpers.ShakeReactionManager;
 import to.react.sdk.android.ReactApi;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ShakeReactionManager.ShakeListener {
 
     TextView testTextView;
 
     ReactApi api;
+    ShakeReactionManager shakeManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +46,17 @@ public class MainActivity extends AppCompatActivity {
         testTextView = (TextView)findViewById(R.id.test);
         testTextView.setText("zzzz");
 
-
+        shakeManager = new ShakeReactionManager();
+        shakeManager.setListener(this);
+        shakeManager.init(this);
+        shakeManager.register();
 
         api = new ReactApi(this) {
             @Override
             public void onReactMessage(BaseReactMessage message) {
                 if (message instanceof InteractionUpdateMessage) {
                     InteractionUpdateMessage msg = (InteractionUpdateMessage)message;
-                    log(String.valueOf(msg.Value));
+//                    log(String.valueOf(msg.Value));
                 }
             }
             @Override
@@ -64,12 +66,12 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
-//        api.executeRequest(new AppsApiRequest() {
-//            @Override
-//            public void onApiResponse(List<App> result) {
-//                testTextView.setText(result.get(0).Name);
-//            }
-//        });
+        api.executeRequest(new AppsApiRequest() {
+            @Override
+            public void onApiResponse(List<App> result) {
+                testTextView.setText(result.get(0).Name);
+            }
+        });
 
 //        api.executeRequest(new AccountUserApiRequest("9a4b10e44d2f000e060e599d41fe3e0e26652d45") {
 //            @Override
@@ -160,12 +162,12 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-        api.executeRequest(new AccountUserDemographicsApiRequest("be0513634862d7b8864d08ecf02afeff2ce2ac98", 1) {
-            @Override
-            public void onApiResponse(User.UserDemographicChoice result) {
-                testTextView.setText(String.valueOf(result.ChoiceId));
-            }
-        });
+//        api.executeRequest(new AccountUserDemographicsApiRequest("be0513634862d7b8864d08ecf02afeff2ce2ac98", 1) {
+//            @Override
+//            public void onApiResponse(User.UserDemographicChoice result) {
+//                testTextView.setText(String.valueOf(result.ChoiceId));
+//            }
+//        });
 
 //        int targetProfileId = 7;
 //        ProfileUpdate newProfile = new ProfileUpdate();
@@ -178,6 +180,11 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
+    }
+
+    @Override
+    public void onReaction(int value) {
+        log("Reaction:" + value);
     }
 
     @Override
@@ -213,4 +220,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
 }

@@ -1,7 +1,7 @@
 package to.react.sdk.android.Api.Requests;
 
 
-import android.util.Log;
+//import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
