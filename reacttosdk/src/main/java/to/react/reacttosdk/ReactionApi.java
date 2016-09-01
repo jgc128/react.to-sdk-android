@@ -60,7 +60,7 @@ public class ReactionApi {
         });
         thread.start();
     }
-    public WebSocketState о(){
+    public WebSocketState getSocketState(){
         return ws.getState();
     }
     public void disconnect(){
@@ -83,6 +83,7 @@ public class ReactionApi {
                 "[" + interaction_id + "]" + ",\"device_id\": \"" + device
                 + "\",\"value\": "
                 + value + "}";
+        Log.e("====", s);
         ws.sendText(s);
     }
 
